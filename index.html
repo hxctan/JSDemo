@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <title>Tip Calculator</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
+
+    <style>
+      body {
+        background-color: #ff7f50; /* Orange background */
+        font-family: 'Roboto', sans-serif; /* Using Roboto font */
+        color: white; /* White text for better contrast */
+      }
+      .card {
+        background-color: rgba(255, 255, 255, 0.1); /* Slightly transparent card */
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="row">
+        <div class="col-md-6 mx-auto">
+          <div class="card card-body text-center mt-5">
+            <h1 class="heading display-5 pb-3">Tip Calculator</h1>
+            <form id="tip-form">
+              <div class="form-group">
+                <div class="input-group">
+                  <span class="input-group-addon">$</span>
+                  <input type="number" class="form-control" id="billTotal" placeholder="Total Bill" required>
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="tipInput">Tip Percentage:</label>
+                <input type="range" class="form-control" id="tipInput" value="15" min="0" max="100" onchange="calculateTip()">
+                <span class="input-group-addon" id="tipOutput">15%</span>
+              </div>
+            </form>
+            <hr>
+
+            <!-- RESULTS -->
+            <div id="results" class="pt-4">
+              <h5>Results</h5>
+              <div class="form-group">
+                <div class="input-group">
+                  <span class="input-group-addon">Tip Amount</span>
+                  <input type="number" class="form-control" id="tipAmount" disabled>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <div class="input-group">
+                  <span class="input-group-addon">Total Bill with Tip</span>
+                  <input type="number" class="form-control" id="totalBillWithTip" disabled>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
+
+    <script>
+      function calculateTip() {
+        const billTotal = parseFloat(document.getElementById('billTotal').value);
+        const tipPercentage = parseFloat(document.getElementById('tipInput').value);
+        const tipOutput = document.getElementById('tipOutput');
+
+        // Ensure the bill total is valid
+        if (!isNaN(billTotal) && billTotal > 0) {
+          const tipAmount = (billTotal * tipPercentage) / 100;
+          const totalBillWithTip = billTotal + tipAmount;
+
+          // Update the output fields
+          document.getElementById('tipAmount').value = tipAmount.toFixed(2);
+          document.getElementById('totalBillWithTip').value = totalBillWithTip.toFixed(2);
+          tipOutput.innerText = tipPercentage + '%';
+        } else {
+          document.getElementById('tipAmount').value = '';
+          document.getElementById('totalBillWithTip').value = '';
+        }
+      }
+
+      // Calculate tip on page load
+      document.addEventListener('DOMContentLoaded', calculateTip);
+    </script>
+  </body>
+</html>
+
